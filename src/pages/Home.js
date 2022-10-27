@@ -1,18 +1,14 @@
-import React from 'react'
-import Footer from '../components/Footer'
-import VideoGrid from '../components/grid/VideoGrid'
-import Navbar from '../components/navbar/Navbar'
-import Tags from '../components/tags/Tags'
-import Pagination from '../components/ui/Pagination'
+import React from 'react';
+import VideoGrid from '../components/grid/VideoGrid';
+import Tags from '../components/tags/Tags';
+import Pagination from '../components/ui/Pagination';
 
 export default function home() {
   return (
     <div>
-        <Navbar/>
-        <Tags/>
-        <VideoGrid/>
-        <Pagination/>
-        <Footer/>
+      <Tags />
+      <VideoGrid />
+      <Pagination />
     </div>
-  )
+  );
 }
