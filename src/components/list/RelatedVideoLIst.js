@@ -30,7 +30,7 @@ export default function RelatedVideoLIst({currentVideoId, tags}) {
   
   return (
     <div>
-        <div class="col-span-full lg:col-auto max-h-[570px] overflow-y-auto">
+        <div className="col-span-full lg:col-auto max-h-[570px] overflow-y-auto">
            {content}
            
           </div>
