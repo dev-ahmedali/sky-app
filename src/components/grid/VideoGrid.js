@@ -3,7 +3,9 @@ import VideoGridItem from './VideoGridItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVideos } from '../../features/videos/VideosSlice';
 import Loading from '../ui/Loading';
-import { setTotalCount } from '../../features/filter/filterSlice';
+import { setTotalCount, clearAuthor } from '../../features/filter/filterSlice';
+import {ImCross} from "react-icons/im"
+
 
 export default function VideoGrid() {
   const dispatch = useDispatch();
@@ -14,14 +16,15 @@ export default function VideoGrid() {
   const {
     tags,
     search,
+    author,
     pagination: { limit, currentPage },
   } = useSelector((state) => state.filter);
 
   useEffect(() => {
-    dispatch(fetchVideos({ tags, search, currentPage, limit }))
+    dispatch(fetchVideos({ tags, search, author, currentPage, limit }))
       .unwrap()
       .then((data) => dispatch(setTotalCount(data.total_count)));
-  }, [dispatch, tags, search, limit, currentPage]);
+  }, [dispatch, tags, search, limit, currentPage, author]);
 
   // decide what to render
   let content;
@@ -40,14 +43,35 @@ export default function VideoGrid() {
     ));
   }
   return (
-    <div>
-      <section className="pt-12">
-        <section className="pt-12">
-          <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto px-5 lg:px-0 min-h-[300px]">
-            {content}
+    <section>
+    <div className="max-w-7xl mx-auto px-5 lg:px-0 my-12">
+      <div className="flex items-center space-x-2">
+        {search && (
+          <p className="text-lg text-gray-700">
+            You searched for: <span className="font-bold">"{search}"</span>
+          </p>
+        )}
+
+        {author && (
+          <div
+            className="cursor-pointer"
+            onClick={() => dispatch(clearAuthor())}
+          >
+            <h2 className="text-lg text-gray-700 flex items-center space-x-1">
+              <span className="font-bold bg-blue-100 text-blue-700 px-4 py-1 ml-4 flex items-center">
+                {author}
+                <ImCross className="w-2 h-2 fill-red-900 ml-2 mt-1" />
+              </span>
+            </h2>
           </div>
-        </section>
-      </section>
+        )}
+      </div>
     </div>
+    <section className="pt-12">
+      <div className="grid grid-cols-12 gap-4 max-w-7xl mx-auto px-5 lg:px-0 min-h-[300px]">
+        {content}
+      </div>
+    </section>
+  </section>
   );
 }

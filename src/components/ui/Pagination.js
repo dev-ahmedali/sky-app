@@ -11,30 +11,28 @@ export default function Pagination() {
   let contentPagination;
 
   if (totalPage <= 5) {
-    contentPagination = [
-      ...Array(totalPage).map((_, i) => (
-        <button
-          className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full disabled:bg-blue-700 disabled:text-white"
-          onClick={() => dispatch(setPage(i + 1))}
-          key={i + 1}
-          disabled={currentPage === i + 1}
-        >
-          {i + 1}
-        </button>
-      )),
-    ];
+    contentPagination = [...Array(totalPage)].map((_, index) => (
+      <button
+        className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full disabled:bg-blue-700 disabled:text-white"
+        onClick={() => dispatch(setPage(index + 1))}
+        key={index + 1}
+        disabled={currentPage === index + 1}
+      >
+        {index + 1}
+      </button>
+    ));
   } else {
     const startValue = Math.floor((currentPage - 1) / 5) * 5;
     contentPagination = (
       <>
-        {[...Array(5)].map((_, i) => (
+        {[...Array(5)].map((_, index) => (
           <button
             className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full disabled:bg-blue-700 disabled:text-white"
-            key={startValue + i + 1}
-            onClick={() => dispatch(setPage(startValue + i + 1))}
-            disabled={currentPage === startValue + i + 1}
+            key={startValue + index + 1}
+            onClick={() => dispatch(setPage(startValue + index + 1))}
+            disabled={currentPage === startValue + index + 1}
           >
-            {startValue + (i + 1)}
+            {startValue + (index + 1)}
           </button>
         ))}
         <button>...</button>
@@ -63,13 +61,15 @@ export default function Pagination() {
             >
               {startValue}
             </button>
-            {[...Array(5)].map((_, i) => (
+            {[...Array(5)].map((_, index) => (
               <button
                 className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full disabled:bg-blue-700 disabled:text-white"
-                key={startValue + i + 1}
-                disabled={currentPage === startValue + i + 1}
-                onClick={() => dispatch(setPage(startValue + i + 1))}
-              ></button>
+                key={startValue + index + 1}
+                disabled={currentPage === startValue + index + 1}
+                onClick={() => dispatch(setPage(startValue + index + 1))}
+              >
+                {startValue + index + 1}
+              </button>
             ))}
             <button>...</button>
             <button
@@ -92,17 +92,19 @@ export default function Pagination() {
               1
             </button>
             <button>...</button>
-            {[...Array(amountLeft)].map((_, i) => (
+            {[...Array(amountLeft)].map((_, index) => (
               <button
                 className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full disabled:bg-blue-700 disabled:text-white"
-                key={startValue + i + 1}
-                disabled={currentPage === startValue + i + 1}
+                key={startValue + index + 1}
+                disabled={currentPage === startValue + index + 1}
                 style={
-                  totalPage < startValue + i + 1 ? { display: 'none' } : null
+                  totalPage < startValue + index + 1
+                    ? { display: 'none' }
+                    : null
                 }
-                onClick={() => dispatch(setPage(startValue + i + 1))}
+                onClick={() => dispatch(setPage(startValue + index + 1))}
               >
-                {startValue + i + 1}
+                {startValue + index + 1}
               </button>
             ))}
           </>
@@ -110,7 +112,6 @@ export default function Pagination() {
       }
     }
   }
-
   return (
     <section className="pt-12">
       <div className="max-w-7xl mx-auto px-5 py-6 lg:px-0 flex gap-2 justify-end">
@@ -128,6 +129,7 @@ export default function Pagination() {
         <button
           className="px-4 py-1 rounded-full bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => dispatch(setPage(currentPage - 1))}
+          disabled={currentPage === 1}
         >
           Prev
         </button>

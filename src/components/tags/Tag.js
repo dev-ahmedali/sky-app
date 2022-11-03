@@ -1,6 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { tagSelected, tagRemoved } from '../../features/filter/filterSlice';
+import {
+  tagSelected,
+  tagRemoved,
+  setPage,
+} from '../../features/filter/filterSlice';
 
 export default function Tag({ title }) {
   const dispatch = useDispatch();
@@ -14,8 +18,10 @@ export default function Tag({ title }) {
 
   const handleSelect = () => {
     if (isSelected) {
+      dispatch(setPage(1));
       dispatch(tagRemoved(title));
     } else {
+      dispatch(setPage(1));
       dispatch(tagSelected(title));
     }
   };
