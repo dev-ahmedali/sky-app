@@ -3,6 +3,7 @@ import VideoGridItem from './VideoGridItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVideos } from '../../features/videos/VideosSlice';
 import Loading from '../ui/Loading';
+import { setTotalCount } from '../../features/filter/filterSlice';
 
 export default function VideoGrid() {
   const dispatch = useDispatch();
@@ -10,11 +11,17 @@ export default function VideoGrid() {
     (state) => state.videos
   );
 
-  const { tags, search } = useSelector((state) => state.filter);
+  const {
+    tags,
+    search,
+    pagination: { limit, currentPage },
+  } = useSelector((state) => state.filter);
 
   useEffect(() => {
-    dispatch(fetchVideos({ tags, search }));
-  }, [dispatch, tags, search]);
+    dispatch(fetchVideos({ tags, search, currentPage, limit }))
+      .unwrap()
+      .then((data) => dispatch(setTotalCount(data.total_count)));
+  }, [dispatch, tags, search, limit, currentPage]);
 
   // decide what to render
   let content;
