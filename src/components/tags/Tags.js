@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTags } from '../../features/tags/tagsSlice';
 import Tag from './Tag';
-import {ImCross} from "react-icons/im"
 import { clearFilter } from '../../features/filter/filterSlice';
 
 export default function Tags() {
@@ -27,8 +26,8 @@ export default function Tags() {
           onClick={clearFiltersHandler}
           className="bg-red-100 text-red-500 px-4 py-1 cursor-pointer flex items-center justify-center rounded-full space-x-1 group hover:bg-red-200 hover-text-red-600 transition"
         >
-          <ImCross className="w-2 h-2 mt-1 fill-red-600 group-hover:fill-red-700 shadow-md" />
-          <span>Clear</span>
+          
+          <span>Reset</span>
         </div>
         </div>
       </section>
